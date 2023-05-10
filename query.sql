@@ -6,6 +6,9 @@ SELECT * FROM Continent;
 SELECT * FROM GDP;
 SELECT * FROM TokyoOlympic;
 
+   -- Countries from Southeast Asia --
+SELECT * FROM COUNTRY WHERE REGION = 'Southeast Asia';
+
    -- Mega City --
 SELECT * FROM City 
 WHERE Population > 7000000;
@@ -13,6 +16,7 @@ WHERE Population > 7000000;
   -- Country with Population Between 50 million and 100 million --
 SELECT * FROM country
 WHERE Population BETWEEN 50000000 AND 100000000;
+
 
   -- Country with 1 billion people or more  --
 SELECT * FROM country
@@ -76,7 +80,7 @@ LEFT JOIN tokyoolympic ON tokyoolympic.NOCCode = country.Code
 WHERE Total IS NOT NULL;
 
 
-
+     -- Countries GDP and their gdp ranks --
 	   SELECT Rank()OVER (ORDER BY (`GDP_constant_2015_US`) DESC) AS gdpRank,
 		      Entity, 
 		      Code,
@@ -94,7 +98,7 @@ WHERE Total IS NOT NULL;
 		  );   
           
           
-          
+     -- Countries GDP and their ranks at the Olympic--       
 SELECT gdp.Entity,
 	   gdp.code,
        TokyoOlympic.NOCCode,
@@ -108,6 +112,7 @@ INNER JOIN TokyoOlympic ON gdp.Code = TokyoOlympic.NOCCode
 ORDER BY Total DESC, Rank_by_Total;
 
 
+  -- Countries GDP per capita and their gdp per capita ranks --
 SELECT country.Name, country.Code, country.Population, gdp.GDP_constant_2015_US, 
 ( gdp.GDP_constant_2015_US / country.Population) AS GDP_per_Capita,
 Rank()OVER (ORDER BY (gdp.GDP_constant_2015_US / country.Population) DESC) AS GDP_per_Capita_Rank
